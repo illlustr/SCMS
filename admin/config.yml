@@ -1,0 +1,596 @@
+backend:
+  name: github
+  repo: illlustr/SCMS
+  branch: master
+  auth_type: token
+
+media_folder: "content/media"
+public_folder: "/content/media"
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+editor:
+  preview: true
+
+collections:
+  
+  # ============================================================
+  # GLOBAL SETTINGS
+  # ============================================================
+  - name: "global"
+    label: "Global Settings"
+    icon: "settings"
+    delete: false
+    editor:
+      preview: false
+    files:
+      
+      - name: "settings"
+        label: "Site Settings"
+        file: "src/data/settings.json"
+        fields:
+          - label: "Site Name"
+            name: "site_name"
+            widget: "string"
+          - label: "Tagline"
+            name: "tagline"
+            widget: "string"
+            required: false
+          - label: "Site URL"
+            name: "site_url"
+            widget: "string"
+          - label: "Favicon"
+            name: "favicon"
+            widget: "image"
+            required: false
+          - label: "Default OG Image"
+            name: "og_image"
+            widget: "image"
+            required: false
+          - label: "SEO"
+            name: "seo"
+            widget: "object"
+            collapsed: true
+            fields:
+              - label: "Meta Title Template"
+                name: "title_template"
+                widget: "string"
+                default: "%s | Site Name"
+              - label: "Meta Description"
+                name: "description"
+                widget: "text"
+                required: false
+          - label: "Analytics"
+            name: "analytics"
+            widget: "object"
+            collapsed: true
+            required: false
+            fields:
+              - label: "Google Analytics ID"
+                name: "ga_id"
+                widget: "string"
+                required: false
+              - label: "Facebook Pixel ID"
+                name: "fb_pixel_id"
+                widget: "string"
+                required: false
+
+      - name: "navigation"
+        label: "Navigation"
+        file: "src/data/navigation.json"
+        fields:
+          - label: "Logo"
+            name: "logo"
+            widget: "image"
+          - label: "Logo Alt Text"
+            name: "logo_alt"
+            widget: "string"
+            default: "Logo"
+          - label: "Navigation Links"
+            name: "nav_links"
+            widget: "list"
+            fields:
+              - label: "Text"
+                name: "text"
+                widget: "string"
+              - label: "URL"
+                name: "url"
+                widget: "string"
+              - label: "Open in New Tab"
+                name: "new_tab"
+                widget: "boolean"
+                default: false
+          - label: "Footer"
+            name: "footer"
+            widget: "object"
+            fields:
+              - label: "Columns"
+                name: "columns"
+                widget: "list"
+                required: false
+                fields:
+                  - label: "Heading"
+                    name: "heading"
+                    widget: "string"
+                  - label: "Links"
+                    name: "links"
+                    widget: "list"
+                    fields:
+                      - label: "Text"
+                        name: "text"
+                        widget: "string"
+                      - label: "URL"
+                        name: "url"
+                        widget: "string"
+              - label: "Copyright"
+                name: "copyright"
+                widget: "string"
+                required: false
+
+      - name: "theme"
+        label: "Theme"
+        file: "src/data/theme.json"
+        fields:
+          - label: "Colors"
+            name: "colors"
+            widget: "object"
+            fields:
+              - label: "Primary"
+                name: "primary"
+                widget: "color"
+                default: "#000000"
+              - label: "Secondary"
+                name: "secondary"
+                widget: "color"
+                default: "#ffffff"
+              - label: "Accent"
+                name: "accent"
+                widget: "color"
+                default: "#ff6b00"
+              - label: "Background"
+                name: "background"
+                widget: "color"
+                default: "#ffffff"
+              - label: "Text"
+                name: "text"
+                widget: "color"
+                default: "#111111"
+          - label: "Typography"
+            name: "typography"
+            widget: "object"
+            fields:
+              - label: "Heading Font"
+                name: "font_heading"
+                widget: "string"
+                default: "serif"
+              - label: "Body Font"
+                name: "font_body"
+                widget: "string"
+                default: "sans-serif"
+
+      - name: "social"
+        label: "Social Media"
+        file: "src/data/social.json"
+        fields:
+          - label: "Social Profiles"
+            name: "profiles"
+            widget: "list"
+            fields:
+              - label: "Platform"
+                name: "platform"
+                widget: "select"
+                options:
+                  - { label: "Instagram", value: "instagram" }
+                  - { label: "Twitter", value: "twitter" }
+                  - { label: "Facebook", value: "facebook" }
+                  - { label: "YouTube", value: "youtube" }
+                  - { label: "LinkedIn", value: "linkedin" }
+                  - { label: "Other", value: "other" }
+              - label: "URL"
+                name: "url"
+                widget: "string"
+          - label: "Link Tree"
+            name: "linktree"
+            widget: "list"
+            required: false
+            fields:
+              - label: "Label"
+                name: "label"
+                widget: "string"
+              - label: "URL"
+                name: "url"
+                widget: "string"
+
+      - name: "store"
+        label: "Store Settings"
+        file: "src/data/store.json"
+        fields:
+          - label: "Currency Code"
+            name: "currency"
+            widget: "string"
+            default: "USD"
+          - label: "Currency Symbol"
+            name: "currency_symbol"
+            widget: "string"
+            default: "$"
+          - label: "Shipping Zones"
+            name: "shipping_zones"
+            widget: "list"
+            required: false
+            fields:
+              - label: "Zone Name"
+                name: "name"
+                widget: "string"
+              - label: "Flat Rate"
+                name: "rate"
+                widget: "number"
+                value_type: "float"
+              - label: "Free Shipping Threshold"
+                name: "free_above"
+                widget: "number"
+                value_type: "float"
+                required: false
+          - label: "Payment Methods"
+            name: "payment_methods"
+            widget: "list"
+            required: false
+            field: 
+              label: "Method"
+              name: "method"
+              widget: "string"
+
+  # ============================================================
+  # PAGES
+  # ============================================================
+  - name: "pages"
+    label: "Pages"
+    icon: "article"
+    files:
+      
+      - name: "home"
+        label: "Homepage"
+        file: "src/data/home.json"
+        fields:
+          - label: "Sections"
+            name: "sections"
+            widget: "list"
+            types:
+              
+              - label: "Hero"
+                name: "hero"
+                widget: "object"
+                fields:
+                  - label: "Headline"
+                    name: "headline"
+                    widget: "string"
+                  - label: "Subheadline"
+                    name: "subheadline"
+                    widget: "string"
+                    required: false
+                  - label: "Image"
+                    name: "image"
+                    widget: "image"
+                  - label: "Button Text"
+                    name: "cta_text"
+                    widget: "string"
+                    required: false
+                  - label: "Button Link"
+                    name: "cta_link"
+                    widget: "string"
+                    required: false
+                  - label: "Layout"
+                    name: "layout"
+                    widget: "select"
+                    options: ["centered", "left", "split"]
+                    default: "centered"
+
+              - label: "Features"
+                name: "features"
+                widget: "object"
+                fields:
+                  - label: "Title"
+                    name: "title"
+                    widget: "string"
+                    required: false
+                  - label: "Subtitle"
+                    name: "subtitle"
+                    widget: "string"
+                    required: false
+                  - label: "Items"
+                    name: "items"
+                    widget: "list"
+                    fields:
+                      - label: "Icon"
+                        name: "icon"
+                        widget: "string"
+                      - label: "Heading"
+                        name: "heading"
+                        widget: "string"
+                      - label: "Description"
+                        name: "body"
+                        widget: "text"
+                        required: false
+
+              - label: "Content"
+                name: "content"
+                widget: "object"
+                fields:
+                  - label: "Title"
+                    name: "title"
+                    widget: "string"
+                    required: false
+                  - label: "Body"
+                    name: "body"
+                    widget: "markdown"
+
+              - label: "Gallery"
+                name: "gallery"
+                widget: "object"
+                fields:
+                  - label: "Title"
+                    name: "title"
+                    widget: "string"
+                    required: false
+                  - label: "Images"
+                    name: "images"
+                    widget: "list"
+                    fields:
+                      - label: "Image"
+                        name: "src"
+                        widget: "image"
+                      - label: "Caption"
+                        name: "caption"
+                        widget: "string"
+                        required: false
+                      - label: "Alt Text"
+                        name: "alt"
+                        widget: "string"
+                        required: false
+
+              - label: "Call to Action"
+                name: "cta"
+                widget: "object"
+                fields:
+                  - label: "Title"
+                    name: "title"
+                    widget: "string"
+                  - label: "Description"
+                    name: "description"
+                    widget: "text"
+                    required: false
+                  - label: "Button Text"
+                    name: "button_text"
+                    widget: "string"
+                  - label: "Button Link"
+                    name: "button_link"
+                    widget: "string"
+
+              - label: "Testimonials"
+                name: "testimonials"
+                widget: "object"
+                fields:
+                  - label: "Title"
+                    name: "title"
+                    widget: "string"
+                    required: false
+                  - label: "Items"
+                    name: "items"
+                    widget: "list"
+                    fields:
+                      - label: "Name"
+                        name: "name"
+                        widget: "string"
+                      - label: "Rating"
+                        name: "rating"
+                        widget: "number"
+                        min: 1
+                        max: 5
+                      - label: "Quote"
+                        name: "quote"
+                        widget: "text"
+
+              - label: "FAQ"
+                name: "faq"
+                widget: "object"
+                fields:
+                  - label: "Title"
+                    name: "title"
+                    widget: "string"
+                    required: false
+                  - label: "Items"
+                    name: "items"
+                    widget: "list"
+                    fields:
+                      - label: "Question"
+                        name: "question"
+                        widget: "string"
+                      - label: "Answer"
+                        name: "answer"
+                        widget: "markdown"
+
+              - label: "Form"
+                name: "form"
+                widget: "object"
+                fields:
+                  - label: "Title"
+                    name: "title"
+                    widget: "string"
+                  - label: "Description"
+                    name: "description"
+                    widget: "text"
+                    required: false
+                  - label: "Button Text"
+                    name: "button_text"
+                    widget: "string"
+                    default: "Submit"
+
+      - name: "about"
+        label: "About Page"
+        file: "src/data/about.json"
+        fields:
+          - label: "Title"
+            name: "title"
+            widget: "string"
+          - label: "Hero Image"
+            name: "image"
+            widget: "image"
+            required: false
+          - label: "Content"
+            name: "content"
+            widget: "markdown"
+          - label: "Team"
+            name: "team"
+            widget: "list"
+            required: false
+            fields:
+              - label: "Name"
+                name: "name"
+                widget: "string"
+              - label: "Role"
+                name: "role"
+                widget: "string"
+              - label: "Photo"
+                name: "photo"
+                widget: "image"
+                required: false
+              - label: "Bio"
+                name: "bio"
+                widget: "text"
+                required: false
+
+      - name: "contact"
+        label: "Contact Page"
+        file: "src/data/contact.json"
+        fields:
+          - label: "Title"
+            name: "title"
+            widget: "string"
+          - label: "Intro"
+            name: "intro"
+            widget: "text"
+            required: false
+          - label: "Email"
+            name: "email"
+            widget: "string"
+          - label: "Phone"
+            name: "phone"
+            widget: "string"
+            required: false
+          - label: "Address"
+            name: "address"
+            widget: "object"
+            required: false
+            fields:
+              - label: "Street"
+                name: "street"
+                widget: "string"
+              - label: "City"
+                name: "city"
+                widget: "string"
+              - label: "Country"
+                name: "country"
+                widget: "string"
+
+  # ============================================================
+  # CONTENT
+  # ============================================================
+  - name: "products"
+    label: "Products"
+    icon: "shopping_bag"
+    folder: "src/content/products"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "Featured"
+        name: "featured"
+        widget: "boolean"
+        default: false
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options: ["available", "sold_out", "coming_soon"]
+        default: "available"
+      - label: "Category"
+        name: "category"
+        widget: "string"
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        required: false
+        field: 
+          label: "Tag"
+          name: "tag"
+          widget: "string"
+      - label: "Price"
+        name: "price"
+        widget: "number"
+        value_type: "float"
+      - label: "Compare Price"
+        name: "compare_price"
+        widget: "number"
+        value_type: "float"
+        required: false
+      - label: "Main Image"
+        name: "image"
+        widget: "image"
+      - label: "Gallery"
+        name: "gallery"
+        widget: "list"
+        required: false
+        fields:
+          - label: "Image"
+            name: "src"
+            widget: "image"
+          - label: "Alt Text"
+            name: "alt"
+            widget: "string"
+            required: false
+      - label: "Excerpt"
+        name: "excerpt"
+        widget: "text"
+        required: false
+      - label: "Description"
+        name: "body"
+        widget: "markdown"
+
+  - name: "blog"
+    label: "Blog"
+    icon: "edit_note"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+      - label: "Author"
+        name: "author"
+        widget: "string"
+        required: false
+      - label: "Cover Image"
+        name: "cover"
+        widget: "image"
+        required: false
+      - label: "Excerpt"
+        name: "excerpt"
+        widget: "text"
+        required: false
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        required: false
+        field: 
+          label: "Tag"
+          name: "tag"
+          widget: "string"
